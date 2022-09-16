@@ -17,7 +17,8 @@
         background: none;
         color: teal;
         border: 1px solid teal;
-        margin-bottom: 20px;
+        /* margin-bottom: 20px; */
+        cursor: pointer;
     }
 
 </style>
