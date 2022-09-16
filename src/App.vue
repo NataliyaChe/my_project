@@ -13,7 +13,7 @@
                 <div v-for="pageNumber in totalPages" :key="pageNumber" class="page" 
                 :class="{
                     'current-page': page === pageNumber
-                }">{{ page }}</div>
+                }">{{ pageNumber }}</div>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@ import MyInput from '@/components/UI/MyInput.vue';
             searchQuery: '',
             page: 1,
             limit: 10,
-            totalPages: 2526,
+            totalPages: 0,
             sortOptions: [
                 {value: 'title', name: 'By title'},
                 {value: 'type', name: 'By type'},
@@ -61,11 +61,15 @@ import MyInput from '@/components/UI/MyInput.vue';
                         limit: this.limit
                     }
                 });
-                // this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
+                
+                this.totalPages = response.data.pagination.last_visible_page
+                console.log(response.data.pagination.last_visible_page
+, 'test1')
                 this.animes = response.data.data;
                 console.log(response.data);
             } catch (e) {
-                alert('Error')
+                console.log(e)
+                
             }
         }
     },
