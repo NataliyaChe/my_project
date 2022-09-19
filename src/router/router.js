@@ -2,6 +2,7 @@ import Main from "@/pages/Main.vue";
 import {createRouter, createWebHistory} from "vue-router";
 import AnimePage from "@/pages/AnimePage.vue";
 import SingleAnimePage from "@/pages/SingleAnimePage.vue";
+import CompositionAnimePage from "@/pages/CompositionAnimePage.vue";
 
 const routes = [
     {
@@ -16,7 +17,10 @@ const routes = [
         path: '/animes/:id',
         component: SingleAnimePage
     },
-    // data.mal_
+    {
+        path: '/composition',
+        component: CompositionAnimePage
+    },
 ]
 
 const router = createRouter({

@@ -3,6 +3,7 @@
         <div @click="$router.push('/')">AnimeList</div>
         <div class="navbar__btns">
             <MyButton @click="$router.push('/animes')">Anime</MyButton>
+            <MyButton @click="$router.push('/composition')">Composition</MyButton>
         </div>
     </div>
 </template>
