@@ -5,6 +5,7 @@
                 <MyInput class="search_inp" v-model="searchQuery" placeholder="Search..."/>
                 <MySelect v-model="selectedSort" :options="sortOptions"/>
             </div>
+            <AnimeForm />
             <!-- <AnimeList :animes="animes"/> Эта строка нужна если сортировать через вотч-->
             <!-- <AnimeList :animes="sortedAnimes"/>  -->
             <AnimeList :animes="sortedSearchAnime"/> 
@@ -24,6 +25,10 @@ import AnimeList from '@/components/AnimeList.vue';
 import axios from 'axios';
 import MySelect from '@/components/UI/MySelect.vue';
 import MyInput from '@/components/UI/MyInput.vue';
+import {ref} from 'vue';
+import {useAnimes} from '@/hooks/useAnimes.js';
+import useSorted from '@/hooks/useSorted.js';
+import useSortedSearch from '@/hooks/useSortedSearch.js';
 
  export default {
     components: {
@@ -34,12 +39,12 @@ import MyInput from '@/components/UI/MyInput.vue';
     },
     data() {
         return {
-            animes: [],
-            selectedSort: '',
-            searchQuery: '',
-            page: 1,
-            limit: 10,
-            totalPages: 0,
+            // animes: [],
+            // selectedSort: '',
+            // searchQuery: '',
+            // page: 1,
+            // limit: 10,
+            // totalPages: 0,
             sortOptions: [
                 {value: 'title', name: 'By title'},
                 {value: 'type', name: 'By type'},
@@ -48,63 +53,39 @@ import MyInput from '@/components/UI/MyInput.vue';
            
         }
     },
-    methods: {
-        createAnime(anime) {
-            this.animes.push(anime);
-        },
-        changePage(pageNumber) {
-            this.page = pageNumber
-            this.fetchAnimes()
-        },
-        async fetchAnimes () {
-            try {
-                const response = await axios.get('https://api.jikan.moe/v4/anime', {
-                    params: {
-                        page: this.page,
-                        limit: this.limit
-                    }
-                });
-                
-                this.totalPages = response.data.pagination.last_visible_page
-                console.log(response.data.pagination.last_visible_page
-, 'test1')
-                this.animes = response.data.data;
-                console.log(response.data);
-            } catch (e) {
-                console.log(e)
-                
-            }
+    setup(props) {
+        const {animes, totalPages} = useAnimes(10);
+        const {selectedSort, sortedAnimes} = useSorted(animes);
+        const {searchQuery, sortedSearchAnime} = useSortedSearch(sortedAnimes);
+        
+        return {
+            animes,
+            totalPages,
+            sortedAnimes,
+            selectedSort,
+            searchQuery,
+            sortedSearchAnime
         }
-    },
-    mounted() {
-        this.fetchAnimes();
-    },
-    computed: {
-        sortedAnimes() {
-            return [...this.animes].sort((anime1, anime2) => anime1[this.selectedSort]?.localeCompare(anime2[this.selectedSort]))
-        },
-        sortedSearchAnime() {
-            return this.sortedAnimes.filter(anime => anime.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
-        },
-        // sortedAnimes() {
-        //     return [...this.animes].sort((anime1, anime2) => anime2[this.selectedSort] - anime1[this.selectedSort])
-        // }
-    },
-    watch: {
-        // selectedSort(newValue) {
-        //     this.animes.sort((anime1, anime2) => {
-        //         return anime1[newValue]?.localeCompare(anime2[newValue])
-        //     })
-        //     console.log(this.animes, 'test');
-        // }
     }
  }
 </script>
 
 <style>
+    /* * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .main {
+        padding: 20px;
+        
+    } */
+
     .btns-container {
         display: flex;
         justify-content: space-between;
+        /* align-items: center; */
         margin: 15px 0;
     }
 
