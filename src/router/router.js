@@ -9,10 +9,10 @@ const routes = [
         path: '/',
         component: Main
     },
-    {
-        path: '/animes',
-        component: AnimePage
-    },
+    // {
+    //     path: '/animes',
+    //     component: AnimePage
+    // },
     {
         path: '/animes/:id',
         component: SingleAnimePage

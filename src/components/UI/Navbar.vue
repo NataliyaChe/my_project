@@ -2,8 +2,7 @@
     <div class="navbar">
         <div @click="$router.push('/')">AnimeList</div>
         <div class="navbar__btns">
-            <MyButton @click="$router.push('/animes')">Anime</MyButton>
-            <MyButton @click="$router.push('/composition')">Composition</MyButton>
+            <MyButton @click="$router.push('/composition')">Click</MyButton>
         </div>
     </div>
 </template>
