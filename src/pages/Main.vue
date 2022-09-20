@@ -14,6 +14,7 @@
                     'current-page': page === pageNumber
                 }" @click="changePage(pageNumber)">{{ pageNumber }}</div>
             </div>
+            <VueTailwindPagination :page="page" :totalPages="totalPages" :limit="limit" @pageChanged="pageChange($event)"></VueTailwindPagination>
         </div>
     </div>
 </template>
@@ -24,13 +25,16 @@ import AnimeList from '@/components/AnimeList.vue';
 import axios from 'axios';
 import MySelect from '@/components/UI/MySelect.vue';
 import MyInput from '@/components/UI/MyInput.vue';
+import VueTailwindPagination from '@ocrv/vue-tailwind-pagination';
+// import '@ocrv/vue-tailwind-pagination/dist/style.css';
 
- export default {
+export default {
     components: {
         AnimeForm,
         AnimeList,
         MySelect,
         MyInput,
+        VueTailwindPagination,
     },
     data() {
         return {
@@ -74,6 +78,9 @@ import MyInput from '@/components/UI/MyInput.vue';
                 console.log(e)
                 
             }
+        },
+        pageChange(pageNumber) {
+            this.page = pageNumber;
         }
     },
     mounted() {
