@@ -8,13 +8,18 @@
             <!-- <AnimeList :animes="animes"/> Эта строка нужна если сортировать через вотч-->
             <!-- <AnimeList :animes="sortedAnimes"/>  -->
             <AnimeList :animes="sortedSearchAnime"/> 
-            <div class="page_container">
+            <!-- <div class="page_container">
                 <div v-for="pageNumber in totalPages" :key="pageNumber" class="page" 
                 :class="{
                     'current-page': page === pageNumber
                 }" @click="changePage(pageNumber)">{{ pageNumber }}</div>
-            </div>
-            <VueTailwindPagination :page="page" :totalPages="totalPages" :limit="limit" @pageChanged="pageChange($event)"></VueTailwindPagination>
+            </div> -->
+            <VueTailwindPagination 
+                :current="page" 
+                :total="totalPages" 
+                :per-page="limit" 
+                @page-changed="pageChange($event)">
+            </VueTailwindPagination>
         </div>
     </div>
 </template>
@@ -25,8 +30,8 @@ import AnimeList from '@/components/AnimeList.vue';
 import axios from 'axios';
 import MySelect from '@/components/UI/MySelect.vue';
 import MyInput from '@/components/UI/MyInput.vue';
+import '@ocrv/vue-tailwind-pagination/styles';
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination';
-// import '@ocrv/vue-tailwind-pagination/dist/style.css';
 
 export default {
     components: {
@@ -42,7 +47,7 @@ export default {
             selectedSort: '',
             searchQuery: '',
             page: 1,
-            limit: 10,
+            limit: 12,
             totalPages: 0,
             sortOptions: [
                 {value: 'title', name: 'By title'},
@@ -56,8 +61,13 @@ export default {
         createAnime(anime) {
             this.animes.push(anime);
         },
-        changePage(pageNumber) {
-            this.page = pageNumber
+        // changePage(pageNumber) {
+        //     this.page = pageNumber
+        //     this.fetchAnimes()
+        // },
+        pageChange(pageNumber) {
+            console.log('test2', pageNumber);
+            this.page = pageNumber;
             this.fetchAnimes()
         },
         async fetchAnimes () {
@@ -69,8 +79,8 @@ export default {
                     }
                 });
                 
-                this.totalPages = response.data.pagination.last_visible_page
-                console.log(response.data.pagination.last_visible_page
+                this.totalPages = response.data.pagination.items.total
+                console.log(response.data.pagination.items.total
 , 'test1')
                 this.animes = response.data.data;
                 console.log(response.data);
@@ -79,9 +89,7 @@ export default {
                 
             }
         },
-        pageChange(pageNumber) {
-            this.page = pageNumber;
-        }
+       
     },
     mounted() {
         this.fetchAnimes();
