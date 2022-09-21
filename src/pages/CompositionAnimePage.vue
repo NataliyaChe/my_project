@@ -6,8 +6,6 @@
                 <MySelect v-model="selectedSort" :options="sortOptions"/>
             </div>
             <AnimeForm />
-            <!-- <AnimeList :animes="animes"/> Эта строка нужна если сортировать через вотч-->
-            <!-- <AnimeList :animes="sortedAnimes"/>  -->
             <AnimeList :animes="sortedSearchAnime"/> 
             <div class="page_container">
                 <div v-for="pageNumber in totalPages" :key="pageNumber" class="page" 

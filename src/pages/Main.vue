@@ -1,26 +1,23 @@
 <template>
     <div class="wrapper">
-        <div>
-            <div class="btns-container">
+        <main class="main">
+            <div class="animelist">
+                <!-- <div class="btns-container">
                 <MyInput class="search_inp" v-model="searchQuery" placeholder="Search..."/>
                 <MySelect v-model="selectedSort" :options="sortOptions"/>
+                </div> -->
+                <AnimeList :animes="sortedSearchAnime"/> 
+                <VueTailwindPagination 
+                    :current="page" 
+                    :total="totalPages" 
+                    :per-page="limit" 
+                    @page-changed="pageChange($event)">
+                </VueTailwindPagination>
             </div>
-            <!-- <AnimeList :animes="animes"/> Эта строка нужна если сортировать через вотч-->
-            <!-- <AnimeList :animes="sortedAnimes"/>  -->
-            <AnimeList :animes="sortedSearchAnime"/> 
-            <!-- <div class="page_container">
-                <div v-for="pageNumber in totalPages" :key="pageNumber" class="page" 
-                :class="{
-                    'current-page': page === pageNumber
-                }" @click="changePage(pageNumber)">{{ pageNumber }}</div>
-            </div> -->
-            <VueTailwindPagination 
-                :current="page" 
-                :total="totalPages" 
-                :per-page="limit" 
-                @page-changed="pageChange($event)">
-            </VueTailwindPagination>
-        </div>
+            <aside class="aside">
+                <GenresList :genres="genres"></GenresList>
+            </aside>
+        </main>
     </div>
 </template>
 
@@ -30,8 +27,10 @@ import AnimeList from '@/components/AnimeList.vue';
 import axios from 'axios';
 import MySelect from '@/components/UI/MySelect.vue';
 import MyInput from '@/components/UI/MyInput.vue';
+import MyButton from '@/components/UI/MyButton.vue';
 import '@ocrv/vue-tailwind-pagination/styles';
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination';
+import GenresList from '@/components/GenresList.vue';
 
 export default {
     components: {
@@ -39,7 +38,10 @@ export default {
         AnimeList,
         MySelect,
         MyInput,
+        MyButton,
         VueTailwindPagination,
+        GenresList,
+        genres: [],
     },
     data() {
         return {
@@ -47,7 +49,7 @@ export default {
             selectedSort: '',
             searchQuery: '',
             page: 1,
-            limit: 12,
+            limit: 8,
             totalPages: 0,
             sortOptions: [
                 {value: 'title', name: 'By title'},
@@ -58,15 +60,10 @@ export default {
         }
     },
     methods: {
-        createAnime(anime) {
-            this.animes.push(anime);
-        },
-        // changePage(pageNumber) {
-        //     this.page = pageNumber
-        //     this.fetchAnimes()
+        // createAnime(anime) {
+        //     this.animes.push(anime);
         // },
         pageChange(pageNumber) {
-            console.log('test2', pageNumber);
             this.page = pageNumber;
             this.fetchAnimes()
         },
@@ -80,19 +77,31 @@ export default {
                 });
                 
                 this.totalPages = response.data.pagination.items.total
-                console.log(response.data.pagination.items.total
-, 'test1')
                 this.animes = response.data.data;
-                console.log(response.data);
+                console.log(response.data.data);
             } catch (e) {
                 console.log(e)
                 
             }
         },
-       
+        async fetchGenres () {
+            try {
+                const res = await axios.get('https://api.jikan.moe/v4/genres/anime');
+
+                this.genres = res.data.data;
+                console.log('genres', res.data.data);
+                
+            } catch (e) {
+                console.log(e)   
+            }
+        },
+        // renderGenres() {
+        //     return this.genres
+        // }
     },
     mounted() {
         this.fetchAnimes();
+        this.fetchGenres();
     },
     computed: {
         sortedAnimes() {
@@ -105,31 +114,15 @@ export default {
         //     return [...this.animes].sort((anime1, anime2) => anime2[this.selectedSort] - anime1[this.selectedSort])
         // }
     },
-    watch: {
-        // selectedSort(newValue) {
-        //     this.animes.sort((anime1, anime2) => {
-        //         return anime1[newValue]?.localeCompare(anime2[newValue])
-        //     })
-        //     console.log(this.animes, 'test');
-        // }
-    }
  }
 </script>
 
 <style>
-    .btns-container {
-        display: flex;
-        justify-content: space-between;
-        margin: 15px 0;
-    }
+    
 
-    .search_inp {
-        width: 300px;
-    }
-
-    .page_container {
+    .main {
         display: flex;
-        margin-top: 15px;
+        gap: 40px;
     }
 
     .page {

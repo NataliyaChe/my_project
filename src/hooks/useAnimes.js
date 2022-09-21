@@ -10,7 +10,7 @@ export function useAnimes(limit) {
             const response = await axios.get('https://api.jikan.moe/v4/anime', {
                 params: {
                     page: 1,
-                    limit: limit
+                    limit: 12
                 }
             });   
             totalPages.value = response.data.pagination.last_visible_page

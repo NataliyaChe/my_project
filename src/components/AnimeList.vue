@@ -19,10 +19,6 @@ import AnimeItem from '@/components/AnimeItem.vue';
             required: true,
         }
     },
-    
-    methods: {
-
-    }
  }
 </script>
 
