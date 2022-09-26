@@ -69,6 +69,7 @@ export default {
             this.page = pageNumber;
             if(this.selectGenres) {
                 this.getGenreID(this.selectGenres)
+                console.log('this.getGenreID')
             } else {
                 this.fetchAnimes()
             }

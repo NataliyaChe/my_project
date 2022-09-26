@@ -21,9 +21,8 @@
     },
     methods: {
         selectGenres(event) {
-            console.log('this.genre.mal_id', event.target.attributes.value.value, event);
-            this.$emit(event.target.attributes.value.value)
-            // this.$emit()
+            this.$emit('getID', event.target.attributes.value.value)
+            console.log('this.genre.mal_id', event.target.attributes.value.value);
         }
         
     }
