@@ -18,6 +18,10 @@ const routes = [
         component: SingleAnimePage
     },
     {
+        path: '/genres/:id',
+        component: SingleAnimePage
+    },
+    {
         path: '/composition',
         component: CompositionAnimePage
     },

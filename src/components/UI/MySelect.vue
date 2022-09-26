@@ -1,7 +1,12 @@
 <template>
     <select class="select" v-model="modelValue" @change="changeOption">
         <option disabled value="">Choose from list</option>
-        <option v-for="option in options" :key="option.value" :value="option.value">{{ option.name }}</option>
+        <option 
+            v-for="option in options" 
+            :key="option.value" 
+            :value="option.value">
+            {{ option.name }}
+        </option>
     </select>
 </template>
 

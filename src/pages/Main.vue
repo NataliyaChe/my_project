@@ -2,11 +2,12 @@
     <div class="wrapper">
         <main class="main">
             <div class="animelist">
+                <!-- <p v-if="seen">Sort by genre: {}</p> -->
                 <!-- <div class="btns-container">
                 <MyInput class="search_inp" v-model="searchQuery" placeholder="Search..."/>
                 <MySelect v-model="selectedSort" :options="sortOptions"/>
                 </div> -->
-                <AnimeList :animes="sortedSearchAnime"/> 
+                <AnimeList :animes="animes"/> 
                 <VueTailwindPagination 
                     :current="page" 
                     :total="totalPages" 
@@ -15,7 +16,7 @@
                 </VueTailwindPagination>
             </div>
             <aside class="aside">
-                <GenresList :genres="genres"></GenresList>
+                <GenresList :genres="genres" @getID="getGenreID"></GenresList>
             </aside>
         </main>
     </div>
@@ -41,7 +42,6 @@ export default {
         MyButton,
         VueTailwindPagination,
         GenresList,
-        genres: [],
     },
     data() {
         return {
@@ -51,25 +51,31 @@ export default {
             page: 1,
             limit: 8,
             totalPages: 0,
-            sortOptions: [
-                {value: 'title', name: 'By title'},
-                {value: 'type', name: 'By type'},
-                {value: 'episodes', name: 'By episodes'},
-            ],
+            genres: [],
+            selectGenres: null,
+            genre: '',
+            // seen: false,
+            // filterGenres: {value: 'genres.mal_id'},
+            // sortOptions: [
+            //     {value: 'title', name: 'By title'},
+            //     {value: 'type', name: 'By type'},
+            //     {value: 'episodes', name: 'By episodes'},
+            // ],
            
         }
     },
     methods: {
-        // createAnime(anime) {
-        //     this.animes.push(anime);
-        // },
         pageChange(pageNumber) {
             this.page = pageNumber;
-            this.fetchAnimes()
+            if(this.selectGenres) {
+                this.getGenreID(this.selectGenres)
+            } else {
+                this.fetchAnimes()
+            }
         },
         async fetchAnimes () {
             try {
-                const response = await axios.get('https://api.jikan.moe/v4/anime', {
+                const response = await axios.get('https://api.jikan.moe/v4/top/anime', {
                     params: {
                         page: this.page,
                         limit: this.limit
@@ -78,7 +84,8 @@ export default {
                 
                 this.totalPages = response.data.pagination.items.total
                 this.animes = response.data.data;
-                console.log(response.data.data);
+                console.log('response', response.data.data);
+                
             } catch (e) {
                 console.log(e)
                 
@@ -86,13 +93,36 @@ export default {
         },
         async fetchGenres () {
             try {
-                const res = await axios.get('https://api.jikan.moe/v4/genres/anime');
+                const response = await axios.get('https://api.jikan.moe/v4/genres/anime');
 
-                this.genres = res.data.data;
-                console.log('genres', res.data.data);
+                this.genres = response.data.data;
+                console.log('genres', response.data.data);
                 
             } catch (e) {
                 console.log(e)   
+            }
+        },
+        async getGenreID (id) {
+            // this.seen = true
+            this.selectGenres = id
+            console.log('select genres', id);
+            try {
+                const response = await axios.get('https://api.jikan.moe/v4/anime', {
+                    params: {
+                        page: this.page,
+                        limit: this.limit,
+                        genres: id,
+                    }
+                });
+                
+                this.totalPages = response.data.pagination.items.total
+                this.animes = response.data.data;
+                console.log('fetch id', id);
+                console.log('fetch resGenre', response.data.data);
+                
+            } catch (e) {
+                console.log(e)
+                
             }
         },
         // renderGenres() {
@@ -103,13 +133,17 @@ export default {
         this.fetchAnimes();
         this.fetchGenres();
     },
+    // updated() {
+    //     this.getGenreID()
+    // },
     computed: {
-        sortedAnimes() {
-            return [...this.animes].sort((anime1, anime2) => anime1[this.selectedSort]?.localeCompare(anime2[this.selectedSort]))
-        },
-        sortedSearchAnime() {
-            return this.sortedAnimes.filter(anime => anime.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
-        },
+
+        // sortedAnimes() {
+        //     return [...this.animes].sort((anime1, anime2) => anime1[this.selectedSort]?.localeCompare(anime2[this.selectedSort]))
+        // },
+        // sortedSearchAnime() {
+        //     return this.sortedAnimes.filter(anime => anime.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
+        // },
         // sortedAnimes() {
         //     return [...this.animes].sort((anime1, anime2) => anime2[this.selectedSort] - anime1[this.selectedSort])
         // }
