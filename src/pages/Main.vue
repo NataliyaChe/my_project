@@ -2,7 +2,7 @@
     <div class="wrapper">
         <main class="main">
             <div class="animelist">
-                <!-- <p v-if="seen">Sort by genre: {}</p> -->
+                <p v-if="seen">Sort by genre: {{ message }}</p>
                 <!-- <div class="btns-container">
                 <MyInput class="search_inp" v-model="searchQuery" placeholder="Search..."/>
                 <MySelect v-model="selectedSort" :options="sortOptions"/>
@@ -54,7 +54,7 @@ export default {
             genres: [],
             selectGenres: null,
             genre: '',
-            // seen: false,
+            seen: false,
             // filterGenres: {value: 'genres.mal_id'},
             // sortOptions: [
             //     {value: 'title', name: 'By title'},
@@ -69,7 +69,6 @@ export default {
             this.page = pageNumber;
             if(this.selectGenres) {
                 this.getGenreID(this.selectGenres)
-                console.log('this.getGenreID')
             } else {
                 this.fetchAnimes()
             }
@@ -103,10 +102,11 @@ export default {
                 console.log(e)   
             }
         },
-        async getGenreID (id) {
-            // this.seen = true
-            this.selectGenres = id
-            console.log('select genres', id);
+        async getGenreID (id, name) {
+            this.seen = true
+            this.message = name
+            this.selectGenres = id, name
+            console.log('select genres', id, name);
             try {
                 const response = await axios.get('https://api.jikan.moe/v4/anime', {
                     params: {
