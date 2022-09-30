@@ -12,7 +12,7 @@
                     :current="page" 
                     :total="totalPages" 
                     :per-page="limit" 
-                    @page-changed="pageChange($event)">
+                    @page-changed="changePage($event)">
                 </VueTailwindPagination>
             </div>
             <aside class="aside">
@@ -55,22 +55,20 @@ export default {
             selectGenres: null,
             genre: '',
             seen: false,
-            // filterGenres: {value: 'genres.mal_id'},
-            // sortOptions: [
-            //     {value: 'title', name: 'By title'},
-            //     {value: 'type', name: 'By type'},
-            //     {value: 'episodes', name: 'By episodes'},
-            // ],
-           
+            active: null,
+            genreName: '',        
         }
     },
     methods: {
-        pageChange(pageNumber) {
+        changePage(pageNumber) {
             this.page = pageNumber;
+            console.log('page change', this.selectGenres)
             if(this.selectGenres) {
-                this.getGenreID(this.selectGenres)
+                console.log('if', this.selectGenres)
+                this.getGenreID(this.selectGenres, this.genreName, this.active)
             } else {
                 this.fetchAnimes()
+                console.log('else')
             }
         },
         async fetchAnimes () {
@@ -102,33 +100,66 @@ export default {
                 console.log(e)   
             }
         },
-        async getGenreID (id, name) {
-            this.seen = true
-            this.message = name
-            this.selectGenres = id, name
-            console.log('select genres', id, name);
-            try {
+        async getGenreID (id, name, isActive) {
+            if (isActive === id) {
+                this.seen = true
+                this.message = name
+                this.selectGenres = id
+                this.genreName = name
+                this.active = isActive
+                
                 const response = await axios.get('https://api.jikan.moe/v4/anime', {
-                    params: {
-                        page: this.page,
-                        limit: this.limit,
+                        params: {
+                            page: this.page,
+                            limit: this.limit,
                         genres: id,
                     }
                 });
                 
                 this.totalPages = response.data.pagination.items.total
                 this.animes = response.data.data;
-                console.log('fetch id', id);
-                console.log('fetch resGenre', response.data.data);
+                console.log('fetch genres');
+            } else {
+                this.selectGenres = null
+                this.fetchAnimes ()
+                console.log('fetch top');
+                // const response = await axios.get('https://api.jikan.moe/v4/top/anime', {
+                //     params: {
+                //         page: this.page,
+                //         limit: this.limit
+                //     }
+                // });
                 
-            } catch (e) {
-                console.log(e)
-                
+                // this.totalPages = response.data.pagination.items.total
+                // this.animes = response.data.data;
             }
         },
-        // renderGenres() {
-        //     return this.genres
-        // }
+
+        // async getGenreID (id, name, isActive) {
+        //     console.log('main', isActive);
+        //     this.seen = true
+        //     this.message = name
+        //     this.selectGenres = id, name
+        //     console.log('select genres', id, name,  isActive);
+        //     try {
+        //         const response = await axios.get('https://api.jikan.moe/v4/anime', {
+        //             params: {
+        //                 page: this.page,
+        //                 limit: this.limit,
+        //                 genres: id,
+        //             }
+        //         });
+                
+        //         this.totalPages = response.data.pagination.items.total
+        //         this.animes = response.data.data;
+        //         console.log('fetch id', id);
+        //         console.log('fetch resGenre', response.data.data);
+                
+        //     } catch (e) {
+        //         console.log(e)
+                
+        //     }
+        // },
     },
     mounted() {
         this.fetchAnimes();
