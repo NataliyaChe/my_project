@@ -1,7 +1,7 @@
 <template>
-    <div class="genres__list" @click="selectGenres">
+    <div class="genres__list" @click="selectGenre">
         <p class="genres__item"
-            :class='(genre.mal_id === +isActive) && "active"'
+            :class='(genre.mal_id === +activeGenreId) && "active"'
             v-for="genre in genres" 
             :key="genre.mal_id" 
             :value="genre.mal_id">
@@ -22,18 +22,18 @@
     },
     data() {
         return {
-            isActive: null,
+            activeGenreId: null,
         }
     },
     methods: {
-        selectGenres(event) {
-            if(this.isActive === event.target.attributes.value.value) {
-                this.isActive = null
+        selectGenre(event) {
+            const genreId = event.target.attributes.value.value
+            if(this.activeGenreId === genreId) {
+                this.activeGenreId = null
             } else {
-                this.isActive = event.target.attributes.value.value
+                this.activeGenreId = genreId
             }
-            this.$emit('getID', event.target.attributes.value.value, event.target.attributes.value.ownerElement.outerText, this.isActive)
-            console.log('this.genre.mal_id', event.target.attributes.value.value, this.isActive);
+            this.$emit('getID', this.activeGenreId, event.target.attributes.value.ownerElement.outerText)
         },
     }
  }
@@ -47,6 +47,3 @@
     background: teal;
   }
 </style>
-
-
-<!-- :class={genre.mal_id === isActive ? "active" : " "}  -->
