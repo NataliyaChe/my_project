@@ -17,9 +17,9 @@
 @import "@/assets/scss/variables.scss";
 
     .navbar {
-        // max-width: 1050px;
         margin: 0 auto;
         padding: 10px 0;
+        background: inherit;
 
         &__title {
             font-family: $main-font;
@@ -28,11 +28,5 @@
             color: $background-color;
             cursor: pointer;
         }
-        
-
-        
-        // display: flex;
-        // align-items: center;
-        // padding: 0 15px;
     }
 </style>

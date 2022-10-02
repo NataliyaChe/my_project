@@ -16,22 +16,18 @@ body {
 
     @media (max-width: $netbook) {
         max-width: fit-content;
-        background: teal;
     }
 
     @media (max-width: $tablet) {
         max-width: fit-content;
-        // max-width: 720px;
-        background: violet;
     }
 
     @media (max-width: $small) {
-        background: yellowgreen;
+        
     }
 
     @media (max-width: $x-small) {
         max-width: fit-content;
-        background: yellow;
     }
 }
 
@@ -52,4 +48,11 @@ body {
     font-family: $main-font;
     font-size: 16px;
     color: $font-color;
+}
+
+.pr-2, .w-14, .pl-4 {
+
+    @media (max-width: $small) {
+        display: none;
+    }
 }

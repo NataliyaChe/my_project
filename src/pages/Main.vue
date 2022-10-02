@@ -3,7 +3,7 @@
         <div class="main__content">
             <div class="flex-wrap">
                 <h2 class="main__title title">Anime list <span v-if="seen">sort by genre: {{ message }}</span></h2>
-            <h2 class="main__title main__genres title">Genres</h2>
+                <h2 class="main__title main__genres title"  v-on:click="isActive=!isActive">Genres</h2>
             </div>
             
             <!-- <p v-if="seen">Sort by genre: {{ message }}</p> -->
@@ -18,7 +18,7 @@
         </div>
         <aside class="main__aside">
             <h2 class="main__title main__genresaside title">Genres:</h2>
-            <GenresList class="genrelist dropdown" :genres="genres" @getID="fetchAnimesByGenre"></GenresList>
+            <GenresList class="genrelist" v-bind:class="{dropdown: isActive}" :genres="genres" @getID="fetchAnimesByGenre"></GenresList>
         </aside>
     </main>
 </template>
@@ -53,7 +53,8 @@ export default {
             genres: [],
             activeGenreId: null,
             seen: false,
-            genreName: '',        
+            genreName: '',  
+            isActive : false,      
         }
     },
     methods: {
@@ -111,6 +112,10 @@ export default {
             this.totalPages = response.data.pagination.items.total
             this.animes = response.data.data;   
         },
+        showDropdown () {
+            console.log('showDropdown', this.$refs.dropdown);
+            this.$refs.dropdown.classList.add('dropdown')
+        }
     },
     mounted() {
         this.fetchAnimes();
@@ -127,6 +132,7 @@ export default {
         display: flex;
         justify-content: center;
         gap: 20px;
+        position: relative;
 
         @media (max-width: $netbook) {
             justify-content: space-between;
@@ -154,7 +160,7 @@ export default {
             @media (max-width: $small) {
                 display:inherit;
                 position: relative;
-                background: pink;
+                cursor: pointer;
             }
         }
 
@@ -167,48 +173,4 @@ export default {
         display: flex;
         justify-content: space-between;
     }
-
-
-    .genrelist {
-    max-width: 200px;
-
-    @media (max-width: $small) {
-            display: none;
-            position:absolute;
-            // visibility: hidden;
-            background: pink;
-        }
-
-    &__item {
-        padding: 3px;
-        padding-left: 10px;
-        cursor: pointer;
-
-        &:hover {
-            border-radius: 5px;
-            background: #ededee;
-        }
-    }
-
-    .dropdown {
-
-        @media (max-width: $small) {
-            // display: unset !important;
-            visibility: visible;
-                // position: absolute;
-                background: pink;
-                z-index: 10;
-            }
-    }
-}
-
-    // .page {
-    //     border: 1px solid teal;
-    //     padding: 10px;
-    // }
-
-    // .current-page {
-    //     color: white;
-    //     background: teal;   
-    // }
 </style>

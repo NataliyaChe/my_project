@@ -33,7 +33,7 @@ import AnimeItem from '@/components/AnimeItem.vue';
         grid-template:  repeat(2, 1fr) / repeat(4, 1fr);
         grid-gap: 20px;
 
-        @media (max-width: $netbook) {
+        @media (max-width: $tablet) {
             grid-template:  repeat(2, 1fr) / repeat(3, 1fr);
         }
 
