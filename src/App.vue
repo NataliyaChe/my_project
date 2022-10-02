@@ -1,7 +1,8 @@
 <template>
-    <div class="header">
+    <!-- <div class="header">
         <Navbar></Navbar>
-    </div>
+    </div> -->
+    <Navbar @getLetter="getLetter"></Navbar>
     <router-view></router-view>
 </template>
 
@@ -10,6 +11,18 @@
     export default {
         components: {
             Navbar,
+        },
+        data() {
+        return {
+            letter: '',
+            
+        }
+    },
+        methods: {
+            getLetter(inpLetter) {
+                console.log('letter fron navbar', this.letter);
+                this.letter = inpLetter;
+            }
         }
     }
 </script>

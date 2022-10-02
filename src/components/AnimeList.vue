@@ -43,11 +43,4 @@ import AnimeItem from '@/components/AnimeItem.vue';
             
             }
     }
-
-    .anime {
-        padding: 15px;
-        border: 2px solid teal;
-        margin-bottom: 15px;
-    }
-
 </style>

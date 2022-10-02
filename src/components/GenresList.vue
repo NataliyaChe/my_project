@@ -69,15 +69,15 @@
 }
 .dropdown {
    
-@media (max-width: $small) {
-    display: revert;
-    position: absolute;
-    right: 20px;
-    top: 50px;
-    z-index: 10;
-    transition: all 1s ease-out 0.5s;
-    background: $background-color;
-    border: 1px solid $font-color;
+    @media (max-width: $small) {
+        display: revert;
+        position: absolute;
+        right: 20px;
+        top: 50px;
+        z-index: 10;
+        transition: all 1s ease-out 0.5s;
+        background: $background-color;
+        border: 1px solid $font-color;
     }
 }
 .active {
