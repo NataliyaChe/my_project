@@ -2,11 +2,9 @@
     <main class="main container">
         <div class="main__content">
             <div class="flex-wrap">
-                <h2 class="main__title title">Anime list <span v-if="seen">sort by genre: {{ message }}</span></h2>
+                <h2 class="main__title main__desc title">Anime list <span v-if="seen">sort by genre: {{ message }}</span></h2>
                 <h2 class="main__title main__genres title"  v-on:click="isActive=!isActive">Genres</h2>
             </div>
-            
-            <!-- <p v-if="seen">Sort by genre: {{ message }}</p> -->
             <AnimeList class="main__list" :animes="animes"/> 
             <VueTailwindPagination 
                 class="main__pagination"
@@ -18,7 +16,7 @@
         </div>
         <aside class="main__aside">
             <h2 class="main__title main__genresaside title">Genres:</h2>
-            <GenresList class="genrelist" v-bind:class="{dropdown: isActive}" :genres="genres" @getID="fetchAnimesByGenre"></GenresList>
+            <GenresList class="genrelist" v-bind:class="{dropdown: isActive}" v-on:click="isActive=false" :genres="genres" @getID="fetchAnimesByGenre"></GenresList>
         </aside>
     </main>
 </template>
@@ -112,10 +110,6 @@ export default {
             this.totalPages = response.data.pagination.items.total
             this.animes = response.data.data;   
         },
-        showDropdown () {
-            console.log('showDropdown', this.$refs.dropdown);
-            this.$refs.dropdown.classList.add('dropdown')
-        }
     },
     mounted() {
         this.fetchAnimes();
@@ -145,6 +139,12 @@ export default {
 
         &__title { 
             margin-bottom: 20px;
+        }
+
+        &__desc {
+            @media (max-width: $small) {
+                max-width: 60%;
+            }
         }
 
         &__genresaside {

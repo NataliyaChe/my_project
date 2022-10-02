@@ -18,17 +18,17 @@ body {
         max-width: fit-content;
     }
 
-    @media (max-width: $tablet) {
-        max-width: fit-content;
-    }
+    // @media (max-width: $tablet) {
+    //     max-width: fit-content;
+    // }
 
-    @media (max-width: $small) {
+    // @media (max-width: $small) {
         
-    }
+    // }
 
-    @media (max-width: $x-small) {
-        max-width: fit-content;
-    }
+    // @media (max-width: $x-small) {
+    //     max-width: fit-content;
+    // }
 }
 
 .title {
@@ -55,4 +55,8 @@ body {
     @media (max-width: $small) {
         display: none;
     }
+}
+
+.px-10 {
+    font-family: $main-font;
 }
