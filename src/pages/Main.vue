@@ -1,21 +1,26 @@
 <template>
-    <div class="wrapper">
-        <main class="main">
-            <div class="animelist">
-                <p v-if="seen">Sort by genre: {{ message }}</p>
-                <AnimeList :animes="animes"/> 
-                <VueTailwindPagination 
-                    :current="page" 
-                    :total="totalPages" 
-                    :per-page="limit" 
-                    @page-changed="changePage($event)">
-                </VueTailwindPagination>
+    <main class="main container">
+        <div class="main__content">
+            <div class="flex-wrap">
+                <h2 class="main__title title">Anime list <span v-if="seen">sort by genre: {{ message }}</span></h2>
+            <h2 class="main__title main__genres title">Genres</h2>
             </div>
-            <aside class="aside">
-                <GenresList :genres="genres" @getID="fetchAnimesByGenre"></GenresList>
-            </aside>
-        </main>
-    </div>
+            
+            <!-- <p v-if="seen">Sort by genre: {{ message }}</p> -->
+            <AnimeList class="main__list" :animes="animes"/> 
+            <VueTailwindPagination 
+                class="main__pagination"
+                :current="page" 
+                :total="totalPages" 
+                :per-page="limit" 
+                @page-changed="changePage($event)">
+            </VueTailwindPagination>
+        </div>
+        <aside class="main__aside">
+            <h2 class="main__title main__genresaside title">Genres:</h2>
+            <GenresList class="genrelist dropdown" :genres="genres" @getID="fetchAnimesByGenre"></GenresList>
+        </aside>
+    </main>
 </template>
 
 <script>
@@ -43,7 +48,7 @@ export default {
         return {
             animes: [],
             page: 1,
-            limit: 8,
+            limit: 24,
             totalPages: 0,
             genres: [],
             activeGenreId: null,
@@ -114,20 +119,96 @@ export default {
  }
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/scss/sizing.scss";
+@import "@/assets/scss/variables.scss";
 
     .main {
         display: flex;
-        gap: 40px;
+        justify-content: center;
+        gap: 20px;
+
+        @media (max-width: $netbook) {
+            justify-content: space-between;
+        }
+
+        @media (max-width: $small) {
+                justify-content: center;
+                gap: 0;
+            }
+
+        &__title { 
+            margin-bottom: 20px;
+        }
+
+        &__genresaside {
+
+            @media (max-width: $small) {
+                display: none;
+            }
+        }
+        
+        &__genres {
+            display: none;
+
+            @media (max-width: $small) {
+                display:inherit;
+                position: relative;
+                background: pink;
+            }
+        }
+
+        &__list {
+            margin-bottom: 40px;
+        }
     }
 
-    .page {
-        border: 1px solid teal;
-        padding: 10px;
+    .flex-wrap {
+        display: flex;
+        justify-content: space-between;
     }
 
-    .current-page {
-        color: white;
-        background: teal;   
+
+    .genrelist {
+    max-width: 200px;
+
+    @media (max-width: $small) {
+            display: none;
+            position:absolute;
+            // visibility: hidden;
+            background: pink;
+        }
+
+    &__item {
+        padding: 3px;
+        padding-left: 10px;
+        cursor: pointer;
+
+        &:hover {
+            border-radius: 5px;
+            background: #ededee;
+        }
     }
+
+    .dropdown {
+
+        @media (max-width: $small) {
+            // display: unset !important;
+            visibility: visible;
+                // position: absolute;
+                background: pink;
+                z-index: 10;
+            }
+    }
+}
+
+    // .page {
+    //     border: 1px solid teal;
+    //     padding: 10px;
+    // }
+
+    // .current-page {
+    //     color: white;
+    //     background: teal;   
+    // }
 </style>

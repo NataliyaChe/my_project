@@ -1,6 +1,6 @@
 <template>
-    <div class="genres__list" @click="selectGenre">
-        <p class="genres__item"
+    <div class="genrelist dropdown" @click="selectGenre">
+        <p class="genrelist__item text"
             :class='(genre.mal_id === +activeGenreId) && "active"'
             v-for="genre in genres" 
             :key="genre.mal_id" 
@@ -39,11 +39,54 @@
  }
 </script>
 
-<style scoped>
-  .active {
-    padding: 5px;
-    margin: 5px;
+
+<style scoped lang="scss">
+@import "@/assets/scss/sizing.scss";
+@import "@/assets/scss/variables.scss";
+
+// .genrelist {
+//     max-width: 200px;
+
+//     @media (max-width: $small) {
+//             display: none;
+//             position:absolute;
+
+//             background: pink;
+//         }
+
+//     &__item {
+//         padding: 3px;
+//         padding-left: 10px;
+//         cursor: pointer;
+
+//         &:hover {
+//             border-radius: 5px;
+//             background: #ededee;
+//         }
+
+//         // &:active {
+//         //     border-radius: 5px;
+//         //     background: #ededee;
+//         // }
+
+//         // &:focus {
+//         //     border-radius: 5px;
+//         //     background: $main-color;
+//         // }
+//     }
+// }
+.dropdown {
+
+@media (max-width: $small) {
+    display: unset !important;
+    // visibility: visible;
+        // position: absolute;
+        background: pink;
+        z-index: 10;
+    }
+}
+.active {
     border-radius: 5px;
-    background: teal;
-  }
+    background: $main-color;
+}
 </style>

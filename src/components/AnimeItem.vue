@@ -1,13 +1,10 @@
 <template>
-    <div class="anime">
-        <div class="anime__container" @click="$router.push(`/animes/${anime.mal_id}`)">
-            <h3>Title: {{ anime.title }}</h3>
-            <p>Type: {{ anime.type }}</p>
-            <p>Episodes: {{ anime.episodes }}</p>  
-            <p>Mal_id: {{ anime.mal_id }}</p>  
-            <img :src=anime?.images?.webp?.image_url alt=""> 
+        <div class="animecard" @click="$router.push(`/animes/${anime.mal_id}`)">
+            <img class="animecard__poster" :src=anime?.images?.webp?.image_url alt="anime poster"> 
+            <h3 class="animecard__title title">{{ anime.title }}</h3>
+            <p class="text">Type: {{ anime.type }}</p>
+            <p class="text">Episodes: {{ anime.episodes }}</p>  
         </div>
-    </div>
 </template>
 
 <script>
@@ -21,10 +18,28 @@
  }
 </script>
 
-<style scoped>
-    .anime {
+<style scoped lang="scss">
+    @import "@/assets/scss/variables.scss";
+
+    .animecard {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
+        max-width: 200px;
+        cursor: pointer;
+    
+        &__poster {
+            max-width: 200px;
+            height: 300px;
+
+        }
+
+        &__title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            
+        }
     }
 
 </style>

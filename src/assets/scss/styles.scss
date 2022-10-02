@@ -1,0 +1,55 @@
+@import "./variables.scss";
+@import "./sizing.scss";
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: url(../images/background.png);
+}
+
+.container {
+    max-width: 1050px;
+    background: $background-color;
+    padding: 20px;
+    margin: 40px auto;
+
+    @media (max-width: $netbook) {
+        max-width: fit-content;
+        background: teal;
+    }
+
+    @media (max-width: $tablet) {
+        max-width: fit-content;
+        // max-width: 720px;
+        background: violet;
+    }
+
+    @media (max-width: $small) {
+        background: yellowgreen;
+    }
+
+    @media (max-width: $x-small) {
+        max-width: fit-content;
+        background: yellow;
+    }
+}
+
+.title {
+    font-family: $main-font;
+    font-size: 20px;
+    font-weight: 500;
+    color: $font-color;
+}
+
+.subtitle {
+    font-family: $main-font;
+    font-size: 16px;
+    font-weight: 500;
+    color: $font-color;
+}
+.text {
+    font-family: $main-font;
+    font-size: 16px;
+    color: $font-color;
+}

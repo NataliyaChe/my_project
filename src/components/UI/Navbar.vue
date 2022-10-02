@@ -1,9 +1,9 @@
 <template>
-    <div class="navbar">
-        <div @click="$router.push('/')">AnimeList</div>
-        <div class="navbar__btns">
+    <div class="navbar container">
+        <div class="navbar__title" @click="$router.push('/')">AnimeList</div>
+        <!-- <div class="navbar__btns">
             <MyButton @click="$router.push('/composition')">Clickй</MyButton>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -13,18 +13,26 @@
  }
 </script>
 
-<style scoped>
-    .navbar {
-        height: 50px;
-        background-color: gray;
-        box-shadow: 2px 2px 4px gray;
-        display: flex;
-        align-items: center;
-        padding: 0 15px;
-    }
+<style scoped lang="scss">
+@import "@/assets/scss/variables.scss";
 
-    .navbar__btns {
+    .navbar {
+        // max-width: 1050px;
+        margin: 0 auto;
+        padding: 10px 0;
+
+        &__title {
+            font-family: $main-font;
+            font-size: 28px;
+            font-weight: 700;
+            color: $background-color;
+            cursor: pointer;
+        }
         
-        margin-left: auto;
+
+        
+        // display: flex;
+        // align-items: center;
+        // padding: 0 15px;
     }
 </style>
