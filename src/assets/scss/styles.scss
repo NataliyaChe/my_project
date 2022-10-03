@@ -22,10 +22,14 @@ button {
     font-size: 20px;
     color: $background-color;
     font-weight: 500;
-    // border: 1px solid $background-color;
-    border-radius: 6px;
     background: $main-color;
     cursor: pointer;
+    border-radius: 6px;
+
+    &:hover {
+        border-radius: 6px;
+        box-shadow: 2px 2px 4px gray;
+    }
 }
 
 .container {
@@ -37,18 +41,6 @@ button {
     @media (max-width: $netbook) {
         max-width: fit-content;
     }
-    
-    // @media (max-width: $tablet) {
-    //     max-width: fit-content;
-    // }
-
-    // @media (max-width: $small) {
-        
-    // }
-
-    // @media (max-width: $x-small) {
-    //     max-width: fit-content;
-    // }
 }
 
 .flex-wrap {
@@ -76,7 +68,6 @@ button {
 }
 
 .pr-2, .w-14, .pl-4 {
-
     @media (max-width: $small) {
         display: none;
     }

@@ -2,7 +2,6 @@
     <div class="header">
         <Navbar></Navbar>
     </div>
-    <!-- <Navbar></Navbar> -->
     <router-view></router-view>
 </template>
 
@@ -20,9 +19,7 @@
 
     .header {
         background-color: $main-color;
-        // margin: 0;
         box-shadow: 2px 2px 4px gray;
-    }
-
-    
+        display: flex;
+    } 
 </style>

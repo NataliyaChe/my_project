@@ -19,15 +19,14 @@
             return {
                 letter: '',
             }
-    },
-    methods: {
-        searchTitle(event) {
-            console.log('letter', this.letter);
-            this.$emit('getLetter', this.letter)
         },
-    }
- }
-    
+        methods: {
+            searchTitle(event) {
+                console.log('letter', this.letter);
+                this.$emit('getLetter', this.letter)
+            },
+        }
+    } 
 </script>
 
 <style scoped lang="scss">
@@ -35,7 +34,6 @@
     @import "@/assets/scss/variables.scss";
 
     .search {
-        // background: yellowgreen;
         display: flex;
         justify-content: left;
         align-items: center;
@@ -44,6 +42,11 @@
 
         &__input {
             border: 1px solid $font-color;
+        }
+
+        &__button {
+            border: none;
+            outline: none;
         }
     }
 </style>

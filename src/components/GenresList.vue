@@ -41,47 +41,47 @@
 
 
 <style scoped lang="scss">
-@import "@/assets/scss/sizing.scss";
-@import "@/assets/scss/variables.scss";
+    @import "@/assets/scss/sizing.scss";
+    @import "@/assets/scss/variables.scss";
 
-.genrelist {
-    max-width: 200px;
-
-    @media (max-width: $small) {
-            display: none;
-            position: absolute;
-            top: 100%;
-        }
-
-    &__item {
-        padding: 3px;
-        padding-left: 10px;
-        cursor: pointer;
+    .genrelist {
+        max-width: 200px;
 
         @media (max-width: $small) {
-            margin: 0 5px;
+                display: none;
+                position: absolute;
+                top: 100%;
+            }
+
+        &__item {
+            padding: 3px;
+            padding-left: 10px;
+            cursor: pointer;
+
+            @media (max-width: $small) {
+                margin: 0 5px;
+            }
+            &:hover {
+                border-radius: 5px;
+                box-shadow: 2px 2px 4px gray;
+            }
         }
-        // &:hover {
-        //     border-radius: 5px;
-        //     background: #ededee;
-        // }
     }
-}
-.dropdown {
-   
-    @media (max-width: $small) {
-        display: revert;
-        position: absolute;
-        right: 20px;
-        top: 50px;
-        z-index: 10;
-        transition: all 1s ease-out 0.5s;
-        background: $background-color;
-        border: 1px solid $font-color;
+    .dropdown {
+    
+        @media (max-width: $small) {
+            display: revert;
+            position: absolute;
+            right: 20px;
+            top: 50px;
+            z-index: 10;
+            transition: all 1s ease-out 0.5s;
+            background: $background-color;
+            border: 1px solid $font-color;
+        }
     }
-}
-.active {
-    border-radius: 5px;
-    background: $main-color;
-}
+    .active {
+        border-radius: 5px;
+        background: $main-color;
+    }
 </style>

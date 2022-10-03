@@ -1,12 +1,10 @@
 <template>
     <div class="navbar container">
-        <div class="navbar__title" @click="$router.push('/')">AnimeList</div>
+        <div class="navbar__title" @click="$router.push('/')">
+            AnimeList
+        </div>
     </div>
 </template>
-
-<script>
-    
-</script>
 
 <style scoped lang="scss">
     @import "@/assets/scss/sizing.scss";

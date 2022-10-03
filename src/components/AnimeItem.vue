@@ -1,30 +1,30 @@
 <template>
-        <div class="animecard wrap" @click="$router.push(`/animes/${anime.mal_id}`)">
+        <div class="animecard wrap" 
+        @click="$router.push(`/animes/${anime.mal_id}`)">
             <div class="wrap">
-                <img class="animecard__poster" :src=anime?.images?.webp?.image_url alt="anime poster"> 
-                <h3 class="animecard__title title">{{ anime.title }}</h3>
+                <img class="animecard__poster" 
+                :src=anime?.images?.webp?.image_url 
+                alt="anime poster"> 
+                <h3 class="animecard__title title">
+                    {{ anime.title }}
+                </h3>
             </div>
-            <!-- <img class="animecard__poster" :src=anime?.images?.webp?.image_url alt="anime poster"> 
-            <h3 class="animecard__title title">{{ anime.title }}</h3> -->
             <div class="animecard__info wrap">
-                <!-- <h3 class="animecard__title title">{{ anime.title }}</h3> -->
-                <!-- <div class="wrap info-wrap"> -->
-                    <p class="text"> {{ anime.year }}</p>  
-                    <p class="text">Type: {{ anime.type }}</p>
-                </div>
-            <!-- </div> -->
+                <p class="text"> {{ anime.year }}</p>  
+                <p class="text">Type: {{ anime.type }}</p>
+            </div>
         </div>
 </template>
 
 <script>
- export default {
-    props: {
-        anime: {
-            type: Object,
-            required: true,
-        }
-    },
- }
+    export default {
+        props: {
+            anime: {
+                type: Object,
+                required: true,
+            }
+        },
+    }
 </script>
 
 <style scoped lang="scss">
