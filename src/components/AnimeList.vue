@@ -1,23 +1,22 @@
 <template>
-        <!-- <h1 class="title">Anime list</h1> -->
-        <div class="animelist">
-            <AnimeItem v-for="anime in animes" :anime="anime"/>
-        </div>
+    <div class="animelist">
+        <AnimeItem v-for="anime in animes" :anime="anime"/>
+    </div>
 </template>
 
 <script>
-import AnimeItem from '@/components/AnimeItem.vue';
- export default {
-    components: {
-        AnimeItem,
-    },
-    props: {
-        animes: {
-            type: Array,
-            required: true,
-        }
-    },
- }
+    import AnimeItem from '@/components/AnimeItem.vue';
+    export default {
+        components: {
+            AnimeItem,
+        },
+        props: {
+            animes: {
+                type: Array,
+                required: true,
+            }
+        },
+    }
 </script>
 
 <style scoped lang="scss">
@@ -36,11 +35,9 @@ import AnimeItem from '@/components/AnimeItem.vue';
         @media (max-width: $tablet) {
             grid-template:  repeat(2, 1fr) / repeat(3, 1fr);
         }
-
-        
+   
         @media (max-width: $x-small) {
-            grid-template:  repeat(2, 1fr) / repeat(2, 1fr);
-            
-            }
+            grid-template:  repeat(2, 1fr) / repeat(2, 1fr); 
+        }
     }
 </style>

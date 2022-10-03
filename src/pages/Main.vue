@@ -1,13 +1,22 @@
 <template>
-    <!-- <Navbar /> -->
     <main class="main container">
         <div class="main__content">
             <div class="flex-wrap">
-                <h2 class="main__title main__description title">Anime list <span v-if="seen">sort by genre: {{ message }}</span></h2>
-                <h2 class="main__title main__genres title"  v-on:click="isActive=!isActive">Genres</h2>
+                <h2 class="main__title main__description title">
+                    Anime list 
+                    <span v-if="seen">
+                        sort by genre: {{ message }}
+                    </span>
+                </h2>
+                <h2 class="main__title main__genres title"          
+                    v-on:click="isActive=!isActive">
+                    Genres
+                </h2>
             </div>
             <Search @getLetter="fetchSearchAnimeList"/>
-            <AnimeList class="main__list" :animes="animes" :letter="letter" /> 
+            <AnimeList class="main__list" 
+                :animes="animes" 
+                :letter="letter" /> 
             <VueTailwindPagination 
                 class="main__pagination"
                 :current="page" 
@@ -17,37 +26,35 @@
             </VueTailwindPagination>
         </div>
         <aside class="main__aside">
-            <h2 class="main__title main__genresaside title">Genres:</h2>
-            <GenresList class="genrelist" v-bind:class="{dropdown: isActive}" v-on:click="isActive=false" :genres="genres" @getID=" fetchAnimesByGenre"></GenresList>
+            <h2 class="main__title main__genresaside title">
+                Genres:
+            </h2>
+            <GenresList class="genrelist" 
+                v-bind:class="{dropdown: isActive}" 
+                v-on:click="isActive=false" 
+                :genres="genres" 
+                @getID="fetchAnimesByGenre" />
         </aside>
     </main>
 </template>
 
 <script>
-// import AnimeForm from '@/components/AnimeForm.vue';
 import AnimeList from '@/components/AnimeList.vue';
 import axios from 'axios';
-// import MyInput from '@/components/UI/MyInput.vue';
-// import MyButton from '@/components/UI/MyButton.vue';
 import '@ocrv/vue-tailwind-pagination/styles';
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination';
 import GenresList from '@/components/GenresList.vue';
 import Navbar from "@/components/UI/Navbar.vue";
 import Search from '@/components/UI/Search.vue';
 
-
 export default {
     components: {
-    // AnimeForm,
-    AnimeList,
-    // MyInput,
-    // MyButton,
-    VueTailwindPagination,
-    GenresList,
-    Navbar,
-    Search,
-    Search
-},
+        AnimeList,
+        VueTailwindPagination,
+        GenresList,
+        Navbar,
+        Search,
+    },
     props: ['letter'],
     data() {
         return {
@@ -93,7 +100,6 @@ export default {
             }
         },
         async fetchGenres () {
-            
             try {
                 const response = await axios.get('https://api.jikan.moe/v4/genres/anime');
 
@@ -125,7 +131,6 @@ export default {
             this.message = name
             this.activeGenreId = id
             this.genreName = name
-            
             this.getByGenreId(id)
         },
         async fetchSearchAnimeList (letter) {
@@ -149,7 +154,6 @@ export default {
         },
     },
     mounted() {
-        
         this.fetchAnimes();
         this.fetchGenres();
     },
@@ -159,14 +163,14 @@ export default {
             this.fetchSearchAnimeList(letter);
         } else {
             this.fetchAnimes();
+        }
     }
 }
- }
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/sizing.scss";
-@import "@/assets/scss/variables.scss";
+    @import "@/assets/scss/sizing.scss";
+    @import "@/assets/scss/variables.scss";
 
     .main {
         display: flex;
@@ -194,7 +198,6 @@ export default {
         }
 
         &__genresaside {
-
             @media (max-width: $small) {
                 display: none;
             }
