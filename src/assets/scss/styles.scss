@@ -10,27 +10,26 @@ body {
 
 input {
     font-family: $main-font;
-    font-size: 20px;
+    font-size: 18px;
     padding: 0 10px;
     outline: none;
     border-radius: 6px;
-    background: $background-color;
 }
 
 button {
-    padding: 3px 12px;
+    padding: 0 12px;
     font-family: $main-font;
     font-size: 20px;
     color: $background-color;
     font-weight: 500;
-    border: 1px solid $background-color;
+    // border: 1px solid $background-color;
     border-radius: 6px;
     background: $main-color;
     cursor: pointer;
 }
 
 .container {
-    
+    max-width: 1140px;
     background: $background-color;
     padding: 20px;
     margin: 40px auto;

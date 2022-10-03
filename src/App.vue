@@ -1,8 +1,8 @@
 <template>
-    <!-- <div class="header">
+    <div class="header">
         <Navbar></Navbar>
-    </div> -->
-    <Navbar @getLetter="getLetter"></Navbar>
+    </div>
+    <!-- <Navbar></Navbar> -->
     <router-view></router-view>
 </template>
 
@@ -11,18 +11,6 @@
     export default {
         components: {
             Navbar,
-        },
-        data() {
-        return {
-            letter: '',
-            
-        }
-    },
-        methods: {
-            getLetter(inpLetter) {
-                console.log('letter fron navbar', this.letter);
-                this.letter = inpLetter;
-            }
         }
     }
 </script>
@@ -36,7 +24,5 @@
         box-shadow: 2px 2px 4px gray;
     }
 
-    .main {
     
-    }
 </style>

@@ -1,13 +1,12 @@
 <template>
-    <div>
-        <!-- <Navbar @getLetter="fetchSearchAnimeList"></Navbar> -->
-    
+    <!-- <Navbar /> -->
     <main class="main container">
         <div class="main__content">
             <div class="flex-wrap">
                 <h2 class="main__title main__description title">Anime list <span v-if="seen">sort by genre: {{ message }}</span></h2>
                 <h2 class="main__title main__genres title"  v-on:click="isActive=!isActive">Genres</h2>
             </div>
+            <Search @getLetter="fetchSearchAnimeList"/>
             <AnimeList class="main__list" :animes="animes" :letter="letter" /> 
             <VueTailwindPagination 
                 class="main__pagination"
@@ -19,35 +18,36 @@
         </div>
         <aside class="main__aside">
             <h2 class="main__title main__genresaside title">Genres:</h2>
-            <GenresList class="genrelist" v-bind:class="{dropdown: isActive}" v-on:click="isActive=false" :genres="genres" @getID="fetchAnimesByGenre"></GenresList>
+            <GenresList class="genrelist" v-bind:class="{dropdown: isActive}" v-on:click="isActive=false" :genres="genres" @getID=" fetchAnimesByGenre"></GenresList>
         </aside>
     </main>
-</div>
 </template>
 
 <script>
-import AnimeForm from '@/components/AnimeForm.vue';
+// import AnimeForm from '@/components/AnimeForm.vue';
 import AnimeList from '@/components/AnimeList.vue';
 import axios from 'axios';
-import MySelect from '@/components/UI/MySelect.vue';
-import MyInput from '@/components/UI/MyInput.vue';
-import MyButton from '@/components/UI/MyButton.vue';
+// import MyInput from '@/components/UI/MyInput.vue';
+// import MyButton from '@/components/UI/MyButton.vue';
 import '@ocrv/vue-tailwind-pagination/styles';
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination';
 import GenresList from '@/components/GenresList.vue';
 import Navbar from "@/components/UI/Navbar.vue";
+import Search from '@/components/UI/Search.vue';
+
 
 export default {
     components: {
-        AnimeForm,
-        AnimeList,
-        MySelect,
-        MyInput,
-        MyButton,
-        VueTailwindPagination,
-        GenresList,
-        Navbar,
-    },
+    // AnimeForm,
+    AnimeList,
+    // MyInput,
+    // MyButton,
+    VueTailwindPagination,
+    GenresList,
+    Navbar,
+    Search,
+    Search
+},
     props: ['letter'],
     data() {
         return {
@@ -67,7 +67,7 @@ export default {
         changePage(pageNumber) {
             this.page = pageNumber;
             if(this.activeGenreId) {
-                this.fetchAnimesByGenre(this.activeGenreId, this.genreName)
+                this.getByGenreId(this.activeGenreId)
             } else if (this.letter) {
                 this.fetchSearchAnimeList (this.letter)
             } else {
@@ -76,9 +76,8 @@ export default {
         },
         async fetchAnimes () {
             try {
-                
                 const response = await axios.get('https://api.jikan.moe/v4/top/anime', {
-                    params: {
+                    params: { 
                         page: this.page,
                         limit: this.limit,
                         letter: this.letter
@@ -87,6 +86,7 @@ export default {
                 
                 this.totalPages = response.data.pagination.items.total
                 this.animes = response.data.data;
+                
             } catch (e) {
                 console.log(e)
                 
@@ -102,17 +102,7 @@ export default {
                 console.log(e)   
             }
         },
-        async fetchAnimesByGenre (id, name) {
-            if(!id) {
-                this.activeGenreId = null
-                this.seen = false
-                return this.fetchAnimes ()
-            }
-            this.seen = true
-            this.message = name
-            this.activeGenreId = id
-            this.genreName = name
-            
+        async getByGenreId(id) {
             const response = await axios.get('https://api.jikan.moe/v4/anime', {
                     params: {
                         page: this.page,
@@ -124,25 +114,39 @@ export default {
             this.totalPages = response.data.pagination.items.total
             this.animes = response.data.data;   
         },
-    //     async fetchSearchAnimeList (letter) {
-    //         console.log('fetchSearchAnimeList', this.letter);
-    //         if(!letter) {
-    //             this.letter = ''
-    //             return this.fetchAnimes ()
-    //         }
-    //         this.letter = letter
+        async fetchAnimesByGenre (id, name) {
+            this.page = 1
+            if(!id) {
+                this.activeGenreId = null
+                this.seen = false
+                return this.fetchAnimes ()
+            }
+            this.seen = true
+            this.message = name
+            this.activeGenreId = id
+            this.genreName = name
             
-    //         const response = await axios.get('https://api.jikan.moe/v4/anime', {
-    //                 params: {
-    //                     page: this.page,
-    //                     limit: this.limit,
-    //                     letter: this.letter
-    //             }
-    //         });
+            this.getByGenreId(id)
+        },
+        async fetchSearchAnimeList (letter) {
+            console.log('fetchSearchAnimeList', this.letter);
+            if(!letter) {
+                this.letter = ''
+                return this.fetchAnimes ()
+            }
+            this.letter = letter
             
-    //         this.totalPages = response.data.pagination.items.total
-    //         this.animes = response.data.data;   
-    //     },
+            const response = await axios.get('https://api.jikan.moe/v4/anime', {
+                    params: {
+                        page: this.page,
+                        limit: this.limit,
+                        letter: this.letter
+                }
+            });
+            
+            this.totalPages = response.data.pagination.items.total
+            this.animes = response.data.data;   
+        },
     },
     mounted() {
         
