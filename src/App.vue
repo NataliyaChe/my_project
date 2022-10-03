@@ -2,29 +2,27 @@
     <div class="header">
         <Navbar></Navbar>
     </div>
-    <div class="main">
-        <router-view></router-view>
-    </div>
+    <!-- <Navbar></Navbar> -->
+    <router-view></router-view>
 </template>
 
 <script>
     import Navbar from "@/components/UI/Navbar.vue";
- export default {
-    components: {
-        Navbar,
+    export default {
+        components: {
+            Navbar,
+        }
     }
- }
 </script>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+<style lang="scss">
+    @import "@/assets/scss/variables.scss";
+
+    .header {
+        background-color: $main-color;
+        // margin: 0;
+        box-shadow: 2px 2px 4px gray;
     }
 
-    .main {
-        padding: 20px;
-        
-    }
+    
 </style>

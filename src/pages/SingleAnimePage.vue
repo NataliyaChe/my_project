@@ -1,17 +1,31 @@
 <template>
-    <div>
-        <div class="">
-            <h1>Anime page with id = {{ $route.params.id }}</h1>
-             <div class="anime__container">
-                <h3>Title: {{ anime.title }}</h3> 
-                <p>Type: {{ anime.type }}</p>
-                <p>Episodes: {{ anime.episodes }}</p>  
-                <p>Mal_id: {{ anime.mal_id }}</p>   
-                <img :src="image" alt="">
-            </div> 
-            
+    <div class="anime container">
+        <div class="flex-wrap">
+            <img :src="image" alt="">
+            <div class="anime__info">
+                <h3 class="title anime__title">{{ anime.title }}</h3> 
+                <p>
+                    <span class="subtitle">Type:</span> {{ anime.type }}
+                </p>
+                <p>
+                    <span class="subtitle">Episodes:</span> {{ anime.episodes }}
+                </p>  
+                <p>
+                    <span class="subtitle">Rating:</span> {{ anime.rating }}
+                </p> 
+                <p>
+                    <span class="subtitle">Score:</span> {{ anime.score }}
+                </p> 
+                <p>
+                    <span class="subtitle">Year:</span> {{ anime.year }}
+                </p> 
+            </div>
         </div>
-    </div>
+         <div>
+            {{ anime.synopsis }}
+         </div>
+        
+    </div> 
 </template>
 
 <script>
@@ -46,6 +60,21 @@
  }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import "@/assets/scss/variables.scss";
 
+    .anime {
+        display: flex;
+        flex-direction: column;
+        gap:40px;
+
+        &__title {
+            margin-bottom: 20px;
+        }
+    }
+
+    .flex-wrap {
+        display: flex;
+        gap:40px;
+    }
 </style>

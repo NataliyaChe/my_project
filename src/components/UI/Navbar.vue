@@ -1,30 +1,28 @@
 <template>
-    <div class="navbar">
-        <div @click="$router.push('/')">AnimeList</div>
-        <div class="navbar__btns">
-            <MyButton @click="$router.push('/composition')">Clickй</MyButton>
-        </div>
+    <div class="navbar container">
+        <div class="navbar__title" @click="$router.push('/')">AnimeList</div>
     </div>
 </template>
 
 <script>
- export default {
     
- }
 </script>
 
-<style scoped>
-    .navbar {
-        height: 50px;
-        background-color: gray;
-        box-shadow: 2px 2px 4px gray;
-        display: flex;
-        align-items: center;
-        padding: 0 15px;
-    }
+<style scoped lang="scss">
+    @import "@/assets/scss/sizing.scss";
+    @import "@/assets/scss/variables.scss";
 
-    .navbar__btns {
-        
-        margin-left: auto;
+    .navbar {
+        padding: 10px 0;
+        margin: 0 auto;
+        background: inherit;
+
+        &__title {
+            font-family: $main-font;
+            font-size: 36px;
+            font-weight: 700;
+            color: $background-color;
+            cursor: pointer;
+        }
     }
 </style>

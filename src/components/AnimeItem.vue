@@ -1,13 +1,19 @@
 <template>
-    <div class="anime">
-        <div class="anime__container" @click="$router.push(`/animes/${anime.mal_id}`)">
-            <h3>Title: {{ anime.title }}</h3>
-            <p>Type: {{ anime.type }}</p>
-            <p>Episodes: {{ anime.episodes }}</p>  
-            <p>Mal_id: {{ anime.mal_id }}</p>  
-            <img :src=anime?.images?.webp?.image_url alt=""> 
+        <div class="animecard wrap" @click="$router.push(`/animes/${anime.mal_id}`)">
+            <div class="wrap">
+                <img class="animecard__poster" :src=anime?.images?.webp?.image_url alt="anime poster"> 
+                <h3 class="animecard__title title">{{ anime.title }}</h3>
+            </div>
+            <!-- <img class="animecard__poster" :src=anime?.images?.webp?.image_url alt="anime poster"> 
+            <h3 class="animecard__title title">{{ anime.title }}</h3> -->
+            <div class="animecard__info wrap">
+                <!-- <h3 class="animecard__title title">{{ anime.title }}</h3> -->
+                <!-- <div class="wrap info-wrap"> -->
+                    <p class="text"> {{ anime.year }}</p>  
+                    <p class="text">Type: {{ anime.type }}</p>
+                </div>
+            <!-- </div> -->
         </div>
-    </div>
 </template>
 
 <script>
@@ -21,9 +27,38 @@
  }
 </script>
 
-<style scoped>
-    .anime {
+<style scoped lang="scss">
+    @import "@/assets/scss/variables.scss";
+
+    .animecard {
+        max-width: 200px;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 2px 2px 4px gray;
+        }
+    
+        &__poster {
+            max-width: 200px;
+            height: 300px;
+            margin-bottom: 15px;
+        }
+
+        &__info {
+            padding: 10px;
+        } 
+
+        &__title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;  
+            padding: 0 10px;
+        }
+    }
+
+    .wrap {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
     }
 
